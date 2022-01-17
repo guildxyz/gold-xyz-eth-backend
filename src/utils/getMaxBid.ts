@@ -9,7 +9,7 @@ const getMaxBid = async (auctionId: string) => {
       apiKey: process.env.FLEEK_API_KEY,
       apiSecret: process.env.FLEEK_API_SECRET,
       prefix: auctionId,
-      getOptions: ["bucket", "key", "hash", "publicUrl"],
+      getOptions: ["key"],
     });
 
     for (let i = 0; i < files.length; i++) {
@@ -17,7 +17,7 @@ const getMaxBid = async (auctionId: string) => {
         apiKey: process.env.FLEEK_API_KEY,
         apiSecret: process.env.FLEEK_API_SECRET,
         key: files[i].key,
-        getOptions: ["data", "bucket", "key", "hash", "publicUrl"],
+        getOptions: ["data"],
       });
       const data = JSON.parse(file.data.toString());
       if (data.order.makerAssetAmount > maxAmount) {
@@ -25,9 +25,8 @@ const getMaxBid = async (auctionId: string) => {
         maxAmount = data.order.makerAssetAmount;
         maxBidId = data.bidId;
       } else if (data.order.makerAssetAmount === maxAmount) {
-        if (data.bidId > maxBidId) {
+        if (data.bidId < maxBidId) {
           maxBid = data;
-          maxAmount = data.order.makerAssetAmount;
           maxBidId = data.bidId;
         }
       }
