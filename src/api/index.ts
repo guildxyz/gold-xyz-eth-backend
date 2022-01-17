@@ -6,8 +6,8 @@ export default () => {
 
   api.get("/api/hello", controller.hello);
   api.get("/api/orders/:auctionId", controller.getOrders);
-  api.get("/api/orders/:auctionId/:address", controller.getOrder);
   api.get("/api/orders/:auctionId/winning", controller.getWinningOrder);
+  api.get("/api/orders/:auctionId/:address", controller.getOrder);
 
   api.post("/api/close-cycle", controller.closeCycle);
   api.post("/api/save-order", controller.saveOrder);

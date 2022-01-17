@@ -10,7 +10,7 @@ const getOrder: ControllerFunction = async (req, res) => {
         apiKey: process.env.FLEEK_API_KEY,
         apiSecret: process.env.FLEEK_API_SECRET,
         key: fileKey,
-        getOptions: ["data", "bucket", "key", "hash", "publicUrl"],
+        getOptions: ["data"],
       })
       .catch(() => undefined);
 

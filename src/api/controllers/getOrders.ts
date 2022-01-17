@@ -10,10 +10,12 @@ const getOrders: ControllerFunction = async (req, res) => {
       prefix: auctionId,
       getOptions: ["bucket", "key", "hash", "publicUrl"],
     });
+
     if (files.length === 0) {
       res.status(404).json({ message: `Auction ${auctionId} does not exist or has no bids yet` });
       return;
     }
+
     res.status(200).json({ orders: files });
   } catch (error) {
     console.error(error);

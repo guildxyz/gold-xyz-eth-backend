@@ -3,8 +3,8 @@ import fleekStorage from "@fleekhq/fleek-storage-js";
 const getMaxBid = async (auctionId: string) => {
   try {
     let maxBid;
-    let maxAmount: number;
-    let maxBidId: number;
+    let maxAmount = 0;
+    let maxBidId = 0;
     const files = await fleekStorage.listFiles({
       apiKey: process.env.FLEEK_API_KEY,
       apiSecret: process.env.FLEEK_API_SECRET,
