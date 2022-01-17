@@ -1,32 +1,19 @@
-import fleekStorage from "@fleekhq/fleek-storage-js";
 import ControllerFunction from "../../types/ControllerFunction.js";
+import { createFileKey, listBuckets, uploadFile, deleteFile } from "../../ipfs.js";
 
 const saveOrder: ControllerFunction = async (req, res) => {
   try {
     const { auctionId, order, signature } = req.body;
     const timestamp = Number(new Date());
     const data = { order, signature, timestamp };
-    const fileKey = auctionId.concat("/", order.makerAddress, ".json");
 
-    const buckets = await fleekStorage.listBuckets({
-      apiKey: process.env.FLEEK_API_KEY,
-      apiSecret: process.env.FLEEK_API_SECRET,
-    });
+    const fileKey = createFileKey(auctionId, order.makerAddress);
+    const buckets = await listBuckets();
 
     // Delete the file to avoid collision
-    await fleekStorage.deleteFile({
-      apiKey: process.env.FLEEK_API_KEY,
-      apiSecret: process.env.FLEEK_API_SECRET,
-      key: fileKey,
-      bucket: buckets[0].name,
-    });
+    await deleteFile(fileKey, buckets[0].name);
 
-    const uploadedFile = await fleekStorage.upload({
-      apiKey: process.env.FLEEK_API_KEY,
-      apiSecret: process.env.FLEEK_API_SECRET,
-      key: fileKey,
-      data: JSON.stringify(data),
-    });
+    const uploadedFile = await uploadFile(fileKey, JSON.stringify(data));
 
     if (uploadedFile !== undefined) {
       res.status(200).json({ message: "Bid saved" });

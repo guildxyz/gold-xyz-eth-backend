@@ -1,23 +1,13 @@
-import fleekStorage from "@fleekhq/fleek-storage-js";
+import { getFile, listFiles } from "../ipfs.js";
 
 const getMaxBid = async (auctionId: string) => {
   try {
     let maxBid;
 
-    const files = await fleekStorage.listFiles({
-      apiKey: process.env.FLEEK_API_KEY,
-      apiSecret: process.env.FLEEK_API_SECRET,
-      prefix: auctionId,
-      getOptions: ["key"],
-    });
+    const files = await listFiles(auctionId, ["key"]);
 
     for (let i = 0; i < files.length; i++) {
-      const file = await fleekStorage.get({
-        apiKey: process.env.FLEEK_API_KEY,
-        apiSecret: process.env.FLEEK_API_SECRET,
-        key: files[i].key,
-        getOptions: ["data"],
-      });
+      const file = await getFile(files[i].key);
       const data = JSON.parse(file.data.toString());
 
       // Initialize the variable
