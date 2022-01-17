@@ -12,7 +12,7 @@ const saveOrder: ControllerFunction = async (req, res) => {
       apiSecret: process.env.FLEEK_API_SECRET,
     });
 
-    //delete a file to avoid collision
+    // Delete the file to avoid collision
     await fleekStorage.deleteFile({
       apiKey: process.env.FLEEK_API_KEY,
       apiSecret: process.env.FLEEK_API_SECRET,
@@ -24,7 +24,7 @@ const saveOrder: ControllerFunction = async (req, res) => {
       apiKey: process.env.FLEEK_API_KEY,
       apiSecret: process.env.FLEEK_API_SECRET,
       key: fileKey,
-      data: data,
+      data: JSON.stringify(data),
     });
 
     if (uploadedFile !== undefined) {
