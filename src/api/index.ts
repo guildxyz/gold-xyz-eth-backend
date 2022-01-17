@@ -6,6 +6,7 @@ export default () => {
 
   api.get("/api/hello", controller.hello);
   api.get("/api/orders/:auctionId", controller.getOrders);
+  api.get("/api/orders/:auctionId/:address", controller.getOrder);
   api.get("/api/orders/:auctionId/winning", controller.getWinningOrder);
 
   api.post("/api/close-cycle", controller.closeCycle);
