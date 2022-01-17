@@ -3,8 +3,9 @@ import ControllerFunction from "../../types/ControllerFunction.js";
 
 const saveOrder: ControllerFunction = async (req, res) => {
   try {
-    const { auctionId, order, signature, bidId } = req.body;
-    const data = { order, signature, bidId };
+    const { auctionId, order, signature } = req.body;
+    const timestamp = Number(new Date());
+    const data = { order, signature, timestamp };
     const fileKey = auctionId.concat("/", order.makerAddress, ".json");
 
     const buckets = await fleekStorage.listBuckets({

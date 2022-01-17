@@ -3,8 +3,7 @@ import fleekStorage from "@fleekhq/fleek-storage-js";
 const getMaxBid = async (auctionId: string) => {
   try {
     let maxBid;
-    let maxAmount = 0;
-    let maxBidId = 0;
+
     const files = await fleekStorage.listFiles({
       apiKey: process.env.FLEEK_API_KEY,
       apiSecret: process.env.FLEEK_API_SECRET,
@@ -20,17 +19,18 @@ const getMaxBid = async (auctionId: string) => {
         getOptions: ["data"],
       });
       const data = JSON.parse(file.data.toString());
-      if (data.order.makerAssetAmount > maxAmount) {
+
+      // Initialize the variable
+      if (i === 0) maxBid = data;
+
+      // If the bid is higher or it's the same amount but older, update maxBid
+      if (
+        data.order.makerAssetAmount > maxBid.order.makerAssetAmount ||
+        (data.order.makerAssetAmount === maxBid.order.makerAssetAmount && data.timestamp < maxBid.timestamp)
+      )
         maxBid = data;
-        maxAmount = data.order.makerAssetAmount;
-        maxBidId = data.bidId;
-      } else if (data.order.makerAssetAmount === maxAmount) {
-        if (data.bidId < maxBidId) {
-          maxBid = data;
-          maxBidId = data.bidId;
-        }
-      }
     }
+
     return maxBid;
   } catch (e) {
     console.error(e);
