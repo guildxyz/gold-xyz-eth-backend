@@ -1,15 +1,30 @@
-import { db } from "../lowdb.js";
+import { getFile, listFiles } from "../ipfs.js";
 
 const getMaxBid = async (auctionId: string) => {
   try {
-    await db.read();
-    if (!db.data[auctionId] || Object.keys(db.data[auctionId]).length <= 0) return -1;
-    const bidder = Object.keys(db.data[auctionId]).reduce((prev, curr) =>
-      db.data[auctionId][prev]?.order.makerAssetAmount > db.data[auctionId][curr]?.order.makerAssetAmount ? prev : curr
-    );
-    return db.data[auctionId][bidder];
+    let maxBid;
+
+    const files = await listFiles(auctionId, ["key"]);
+
+    for (let i = 0; i < files.length; i++) {
+      const file = await getFile(files[i].key);
+      const data = JSON.parse(file.data.toString());
+
+      // Initialize the variable
+      if (i === 0) maxBid = data;
+
+      // If the bid is higher or it's the same amount but older, update maxBid
+      if (
+        data.order.makerAssetAmount > maxBid.order.makerAssetAmount ||
+        (data.order.makerAssetAmount === maxBid.order.makerAssetAmount && data.timestamp < maxBid.timestamp)
+      )
+        maxBid = data;
+    }
+
+    return maxBid;
   } catch (e) {
     console.error(e);
+    return undefined;
   }
 };
 

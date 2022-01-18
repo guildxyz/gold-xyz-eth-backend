@@ -1,5 +1,4 @@
 import ControllerFunction from "../../types/ControllerFunction.js";
-import { db } from "../../lowdb.js";
 
 const closeCycle: ControllerFunction = async (req, res) => {
   try {
