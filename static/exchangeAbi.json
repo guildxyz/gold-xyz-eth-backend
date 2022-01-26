@@ -1,0 +1,2904 @@
+[
+  {
+    "inputs": [
+      {
+        "name": "chainId",
+        "type": "uint256"
+      }
+    ],
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "bytes4",
+        "indexed": false
+      },
+      {
+        "name": "assetProxy",
+        "type": "address",
+        "indexed": false
+      }
+    ],
+    "name": "AssetProxyRegistered",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "makerAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "feeRecipientAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "makerAssetData",
+        "type": "bytes",
+        "indexed": false
+      },
+      {
+        "name": "takerAssetData",
+        "type": "bytes",
+        "indexed": false
+      },
+      {
+        "name": "senderAddress",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "orderHash",
+        "type": "bytes32",
+        "indexed": true
+      }
+    ],
+    "name": "Cancel",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "makerAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "orderSenderAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "orderEpoch",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "name": "CancelUpTo",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "makerAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "feeRecipientAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "makerAssetData",
+        "type": "bytes",
+        "indexed": false
+      },
+      {
+        "name": "takerAssetData",
+        "type": "bytes",
+        "indexed": false
+      },
+      {
+        "name": "makerFeeAssetData",
+        "type": "bytes",
+        "indexed": false
+      },
+      {
+        "name": "takerFeeAssetData",
+        "type": "bytes",
+        "indexed": false
+      },
+      {
+        "name": "orderHash",
+        "type": "bytes32",
+        "indexed": true
+      },
+      {
+        "name": "takerAddress",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "senderAddress",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "makerAssetFilledAmount",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "takerAssetFilledAmount",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "makerFeePaid",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "takerFeePaid",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "protocolFeePaid",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "name": "Fill",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "previousOwner",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "newOwner",
+        "type": "address",
+        "indexed": true
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "oldProtocolFeeCollector",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "updatedProtocolFeeCollector",
+        "type": "address",
+        "indexed": false
+      }
+    ],
+    "name": "ProtocolFeeCollectorAddress",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "oldProtocolFeeMultiplier",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "updatedProtocolFeeMultiplier",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "name": "ProtocolFeeMultiplier",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "signerAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "validatorAddress",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "isApproved",
+        "type": "bool",
+        "indexed": false
+      }
+    ],
+    "name": "SignatureValidatorApproval",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "transactionHash",
+        "type": "bytes32",
+        "indexed": true
+      }
+    ],
+    "name": "TransactionExecution",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "EIP1271_MAGIC_VALUE",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "EIP712_EXCHANGE_DOMAIN_HASH",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index_0",
+        "type": "address"
+      },
+      {
+        "name": "index_1",
+        "type": "address"
+      }
+    ],
+    "name": "allowedValidators",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      }
+    ],
+    "name": "batchCancelOrders",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "transactions",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "gasPrice",
+            "type": "uint256"
+          },
+          {
+            "name": "signerAddress",
+            "type": "address"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "batchExecuteTransactions",
+    "outputs": [
+      {
+        "name": "returnData",
+        "type": "bytes[]"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmounts",
+        "type": "uint256[]"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "batchFillOrKillOrders",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmounts",
+        "type": "uint256[]"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "batchFillOrders",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmounts",
+        "type": "uint256[]"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "batchFillOrdersNoThrow",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "leftOrders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "rightOrders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "leftSignatures",
+        "type": "bytes[]"
+      },
+      {
+        "name": "rightSignatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "batchMatchOrders",
+    "outputs": [
+      {
+        "name": "batchMatchedFillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "left",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "right",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "profitInLeftMakerAsset",
+            "type": "uint256"
+          },
+          {
+            "name": "profitInRightMakerAsset",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "leftOrders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "rightOrders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "leftSignatures",
+        "type": "bytes[]"
+      },
+      {
+        "name": "rightSignatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "batchMatchOrdersWithMaximalFill",
+    "outputs": [
+      {
+        "name": "batchMatchedFillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "left",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "right",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "profitInLeftMakerAsset",
+            "type": "uint256"
+          },
+          {
+            "name": "profitInRightMakerAsset",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "order",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      }
+    ],
+    "name": "cancelOrder",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "targetOrderEpoch",
+        "type": "uint256"
+      }
+    ],
+    "name": "cancelOrdersUpTo",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index_0",
+        "type": "bytes32"
+      }
+    ],
+    "name": "cancelled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "currentContextAddress",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "detachProtocolFeeCollector",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "transaction",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "gasPrice",
+            "type": "uint256"
+          },
+          {
+            "name": "signerAddress",
+            "type": "address"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "executeTransaction",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "order",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "fillOrKillOrder",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "order",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "fillOrder",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index_0",
+        "type": "bytes32"
+      }
+    ],
+    "name": "filled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "assetProxyId",
+        "type": "bytes4"
+      }
+    ],
+    "name": "getAssetProxy",
+    "outputs": [
+      {
+        "name": "assetProxy",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "order",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      }
+    ],
+    "name": "getOrderInfo",
+    "outputs": [
+      {
+        "name": "orderInfo",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "orderStatus",
+            "type": "uint8"
+          },
+          {
+            "name": "orderHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "orderTakerAssetFilledAmount",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "hash",
+        "type": "bytes32"
+      },
+      {
+        "name": "signerAddress",
+        "type": "address"
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "isValidHashSignature",
+    "outputs": [
+      {
+        "name": "isValid",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "order",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "isValidOrderSignature",
+    "outputs": [
+      {
+        "name": "isValid",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "transaction",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "gasPrice",
+            "type": "uint256"
+          },
+          {
+            "name": "signerAddress",
+            "type": "address"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "signature",
+        "type": "bytes"
+      }
+    ],
+    "name": "isValidTransactionSignature",
+    "outputs": [
+      {
+        "name": "isValid",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "makerAssetFillAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "marketBuyOrdersFillOrKill",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "makerAssetFillAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "marketBuyOrdersNoThrow",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "marketSellOrdersFillOrKill",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "orders",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "takerAssetFillAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "marketSellOrdersNoThrow",
+    "outputs": [
+      {
+        "name": "fillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetFilledAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFeePaid",
+            "type": "uint256"
+          },
+          {
+            "name": "protocolFeePaid",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "leftOrder",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "rightOrder",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "leftSignature",
+        "type": "bytes"
+      },
+      {
+        "name": "rightSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "matchOrders",
+    "outputs": [
+      {
+        "name": "matchedFillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "left",
+            "type": "tuple",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "right",
+            "type": "tuple",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "profitInLeftMakerAsset",
+            "type": "uint256"
+          },
+          {
+            "name": "profitInRightMakerAsset",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "leftOrder",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "rightOrder",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "makerAddress",
+            "type": "address"
+          },
+          {
+            "name": "takerAddress",
+            "type": "address"
+          },
+          {
+            "name": "feeRecipientAddress",
+            "type": "address"
+          },
+          {
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "name": "makerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takerAssetAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "takerFee",
+            "type": "uint256"
+          },
+          {
+            "name": "expirationTimeSeconds",
+            "type": "uint256"
+          },
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "makerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "makerFeeAssetData",
+            "type": "bytes"
+          },
+          {
+            "name": "takerFeeAssetData",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "leftSignature",
+        "type": "bytes"
+      },
+      {
+        "name": "rightSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "matchOrdersWithMaximalFill",
+    "outputs": [
+      {
+        "name": "matchedFillResults",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "left",
+            "type": "tuple",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "right",
+            "type": "tuple",
+            "components": [
+              {
+                "name": "makerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "takerAssetFilledAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "makerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "takerFeePaid",
+                "type": "uint256"
+              },
+              {
+                "name": "protocolFeePaid",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "name": "profitInLeftMakerAsset",
+            "type": "uint256"
+          },
+          {
+            "name": "profitInRightMakerAsset",
+            "type": "uint256"
+          }
+        ]
+      }
+    ],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index_0",
+        "type": "address"
+      },
+      {
+        "name": "index_1",
+        "type": "address"
+      }
+    ],
+    "name": "orderEpoch",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "hash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "preSign",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index_0",
+        "type": "bytes32"
+      },
+      {
+        "name": "index_1",
+        "type": "address"
+      }
+    ],
+    "name": "preSigned",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "protocolFeeCollector",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "protocolFeeMultiplier",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "assetProxy",
+        "type": "address"
+      }
+    ],
+    "name": "registerAssetProxy",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "updatedProtocolFeeCollector",
+        "type": "address"
+      }
+    ],
+    "name": "setProtocolFeeCollectorAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "updatedProtocolFeeMultiplier",
+        "type": "uint256"
+      }
+    ],
+    "name": "setProtocolFeeMultiplier",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "validatorAddress",
+        "type": "address"
+      },
+      {
+        "name": "approval",
+        "type": "bool"
+      }
+    ],
+    "name": "setSignatureValidatorApproval",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "assetData",
+        "type": "bytes[]"
+      },
+      {
+        "name": "fromAddresses",
+        "type": "address[]"
+      },
+      {
+        "name": "toAddresses",
+        "type": "address[]"
+      },
+      {
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "simulateDispatchTransferFromCalls",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index_0",
+        "type": "bytes32"
+      }
+    ],
+    "name": "transactionsExecuted",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
