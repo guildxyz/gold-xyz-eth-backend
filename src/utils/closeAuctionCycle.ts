@@ -1,7 +1,7 @@
 import { orderHashUtils } from "@0x/order-utils";
 import { goldContract } from "../config/contract.js";
 import getMaxBid from "./getMaxBid.js";
-import { orderInfo, protocolFee, isValidHashSignature, isValidOrderSignature } from "./ZeroExExchangeUtils.js";
+import { isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee } from "./ZeroExExchangeUtils.js";
 
 const closeAuctionCycle = async (auctionId: string) => {
   try {

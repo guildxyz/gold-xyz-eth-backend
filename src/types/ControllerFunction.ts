@@ -1,5 +1,5 @@
-import type { Request, Response } from "express"
+import type { Request, Response } from "express";
 
-type ControllerFunction = (req: Request, res: Response) => void | Promise<void>
+type ControllerFunction = (req: Request, res: Response) => void | Promise<void>;
 
-export default ControllerFunction
+export default ControllerFunction;
