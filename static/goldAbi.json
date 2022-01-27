@@ -3,6 +3,21 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_weth",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_swapFactory",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_swapRouter",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_ERC721Proxy",
         "type": "address"
       },
@@ -87,6 +102,25 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "uint128",
+        "name": "cycle",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "auctionId",
+        "type": "string"
+      }
+    ],
+    "name": "CycleOpened",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "string",
         "name": "auctionId",
@@ -95,7 +129,13 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "paid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "fee",
         "type": "uint256"
       }
     ],
@@ -145,94 +185,6 @@
     ],
     "name": "OwnershipTransferred",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "auctions",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "auctionName",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint128",
-            "name": "cyclePeriod",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint128",
-            "name": "numberOfCycles",
-            "type": "uint128"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minimumBidAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "bidderTokenAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "nftAddress",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct Gold.AuctionConfig",
-        "name": "config",
-        "type": "tuple"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint112",
-            "name": "currentAuctionCycleStartTime",
-            "type": "uint112"
-          },
-          {
-            "internalType": "uint128",
-            "name": "currentAuctionCycle",
-            "type": "uint128"
-          },
-          {
-            "internalType": "bool",
-            "name": "isFrozen",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalAmountCollected",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Gold.AuctionStatus",
-        "name": "status",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -350,14 +302,31 @@
         "type": "tuple"
       },
       {
-        "internalType": "string",
-        "name": "_nftName",
-        "type": "string"
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "ipfsHash",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Gold.NftMetadata",
+        "name": "_nftMetadata",
+        "type": "tuple"
       },
       {
-        "internalType": "string",
-        "name": "_nftSymbol",
-        "type": "string"
+        "internalType": "uint24",
+        "name": "_poolFeeTier",
+        "type": "uint24"
       },
       {
         "internalType": "uint112",
@@ -476,6 +445,11 @@
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "_uniFee",
+        "type": "uint24"
       }
     ],
     "name": "claimFunds",
@@ -494,6 +468,94 @@
     "name": "changeAuctionFreezeState",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_auctionId",
+        "type": "string"
+      }
+    ],
+    "name": "getAuctionConfig",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "auctionName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint128",
+        "name": "cyclePeriod",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "numberOfCycles",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minimumBidAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "bidderTokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_auctionId",
+        "type": "string"
+      }
+    ],
+    "name": "getAuctionStatus",
+    "outputs": [
+      {
+        "internalType": "uint112",
+        "name": "currentAuctionCycleStartTime",
+        "type": "uint112"
+      },
+      {
+        "internalType": "uint128",
+        "name": "currentAuctionCycle",
+        "type": "uint128"
+      },
+      {
+        "internalType": "bool",
+        "name": "isFrozen",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "isActive",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalAmountCollected",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

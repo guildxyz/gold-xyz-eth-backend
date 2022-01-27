@@ -6,6 +6,8 @@ const getMaxBid = async (auctionId: string) => {
 
     const files = await listFiles(auctionId, ["key"]);
 
+    if (files.length === 0) return undefined;
+
     for (let i = 0; i < files.length; i++) {
       const file = await getFile(files[i].key);
       const data = JSON.parse(file.data.toString());
