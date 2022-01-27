@@ -9,7 +9,8 @@
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js",
     "type-check": "tsc --pretty --noEmit",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint-fix": "eslint --fix . --ext .ts,.tsx,.js,.jsx",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "repository": {
@@ -61,7 +62,7 @@
     "express": "^4.17.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
+    "*.{js,jsx,ts,tsx}": "npm run lint-fix",
     "*.{js,jsx,ts,tsx,md,html,css}": "pretty-quick --staged"
   }
 }
