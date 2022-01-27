@@ -8,6 +8,7 @@
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js",
+    "type-check": "tsc --pretty --noEmit",
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
