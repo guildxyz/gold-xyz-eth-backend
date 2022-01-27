@@ -20,8 +20,9 @@ const closeAuctionCycle = async (auctionId: string) => {
           gasLimit: 2000000,
           value: fee,
         });
-      } catch (error: any) {
+      } catch (error) {
         console.error(error);
+        // TODO: try to decode revert reason or error name/params
         throw new Error("Auction cycle cannot be closed in the contract");
       }
       await goldContract.closeAuctionCycle(maxBid.order, maxBid.signature, auctionId, {

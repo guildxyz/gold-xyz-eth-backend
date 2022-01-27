@@ -7,8 +7,11 @@ const closeCycle: ControllerFunction = async (req, res) => {
     try {
       await closeAuctionCycle(auctionId);
       res.status(200).json({ message: `Closing the current cycle of ${auctionId}` });
-    } catch (error: any) {
-      res.status(500).json({ message: `Closing the current cycle of ${auctionId} failed`, error: error.message });
+    } catch (error) {
+      res.status(500).json({
+        message: `Closing the current cycle of ${auctionId} failed`,
+        error: `${error instanceof Error ? error.message : error}`,
+      });
     }
   } catch (error) {
     console.error(error);
