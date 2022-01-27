@@ -70,5 +70,5 @@
     "resolveJsonModule": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "build", "tsconfig.json"]
+  "exclude": ["node_modules", "build"]
 }
