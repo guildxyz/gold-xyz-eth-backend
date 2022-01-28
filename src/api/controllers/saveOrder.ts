@@ -1,12 +1,16 @@
 import { createFileKey, deleteFile, listBuckets, uploadFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
+import getAuctions from "../../utils/getAuctions.js";
 
 const saveOrder: ControllerFunction = async (req, res) => {
   try {
     const { auctionId, order, signature } = req.body;
     const timestamp = Number(new Date());
     const data = { order, signature, timestamp };
+
+    const auctions = await getAuctions();
+    if (!auctions.includes(auctionId)) throw new ErrorWithCode(`Auction ${auctionId} does not exist`, 404);
 
     const fileKey = createFileKey(auctionId, order.makerAddress);
     const buckets = await listBuckets();
