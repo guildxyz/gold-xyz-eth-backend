@@ -1,9 +1,9 @@
 {
   "plugins": ["@typescript-eslint"],
   "extends": ["airbnb-base", "airbnb-typescript/base", "prettier"],
-  // "parserOptions": {
-  //   "project": "./tsconfig.json"
-  // },
+  "parserOptions": {
+    "project": "./tsconfig.eslint.json"
+  },
   "env": {
     "es2021": true,
     "browser": true,

@@ -31,7 +31,7 @@ const uploadFile = async (fileKey: string, data: string) =>
     apiKey: process.env.FLEEK_API_KEY,
     apiSecret: process.env.FLEEK_API_SECRET,
     key: fileKey,
-    data: data,
+    data,
   });
 
 const deleteFile = async (fileKey: string, bucketName: string) =>

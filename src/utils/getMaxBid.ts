@@ -8,7 +8,9 @@ const getMaxBid = async (auctionId: string) => {
 
     if (files.length === 0) return undefined;
 
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i += 1) {
+      // Note: await is fine here, as we don't want to store all files in the memory at once
+      // eslint-disable-next-line no-await-in-loop
       const file = await getFile(files[i].key);
       const data = JSON.parse(file.data.toString());
 
