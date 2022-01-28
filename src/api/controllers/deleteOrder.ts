@@ -1,6 +1,7 @@
 import { createFileKey, deleteFile, listBuckets } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
-import verifySignature from "../../utils/verifySignature.js";
+import { ErrorWithCode, handleError } from "../../utils/errors.js";
+import { verifySignature } from "../../utils/signatures.js";
 
 const deleteOrder: ControllerFunction = async (req, res) => {
   try {
@@ -10,14 +11,10 @@ const deleteOrder: ControllerFunction = async (req, res) => {
       const buckets = await listBuckets();
       await deleteFile(fileKey, buckets[0].name);
       res.status(200).json({ message: "Delete request sent" });
-    } else res.status(401).json({ message: "Invalid signature" });
+    } else throw new ErrorWithCode("Invalid signature", 403);
   } catch (error) {
-    if ((error as Error).message === "Incorrect signature")
-      res.status(500).json({ message: "Incorrect signature provided" });
-    else {
-      console.error(error);
-      res.status(500).json({ message: "Unexpected error" });
-    }
+    console.error(error);
+    handleError("Deleting bid failed", error, res);
   }
 };
 

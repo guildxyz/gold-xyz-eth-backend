@@ -1,12 +1,11 @@
 import ControllerFunction from "../../types/ControllerFunction.js";
+import { handleError } from "../../utils/errors.js";
 
 const hello: ControllerFunction = (req, res) => {
   try {
-    if (req.query.name !== undefined) res.status(200).json({ message: `Hello ${req.query.name}` });
-    else res.status(200).json({ message: "Hello friend" });
+    res.status(200).json({ message: `Hello ${req.query.name === undefined ? "friend" : req.query.name}` });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Unknown error" });
+    handleError("Bruh", error, res);
   }
 };
 

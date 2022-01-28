@@ -1,21 +1,16 @@
 import ControllerFunction from "../../types/ControllerFunction.js";
 import closeAuctionCycle from "../../utils/closeAuctionCycle.js";
+import { handleError } from "../../utils/errors.js";
 
 const closeCycle: ControllerFunction = async (req, res) => {
+  let auctionId;
   try {
-    const { auctionId } = req.body;
-    try {
-      await closeAuctionCycle(auctionId);
-      res.status(200).json({ message: `Closing the current cycle of ${auctionId}` });
-    } catch (error) {
-      res.status(500).json({
-        message: `Closing the current cycle of ${auctionId} failed`,
-        error: `${error instanceof Error ? error.message : error}`,
-      });
-    }
+    auctionId = req.body.auctionId;
+    await closeAuctionCycle(auctionId);
+    res.status(200).json({ message: `Closing the current cycle of ${auctionId}` });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Unexpected error" });
+    handleError(`Closing cycle failed: ${auctionId}`, error, res);
   }
 };
 

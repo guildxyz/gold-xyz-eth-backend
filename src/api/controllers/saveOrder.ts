@@ -1,5 +1,6 @@
 import { createFileKey, deleteFile, listBuckets, uploadFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
+import { ErrorWithCode, handleError } from "../../utils/errors.js";
 
 const saveOrder: ControllerFunction = async (req, res) => {
   try {
@@ -15,14 +16,12 @@ const saveOrder: ControllerFunction = async (req, res) => {
 
     const uploadedFile = await uploadFile(fileKey, JSON.stringify(data));
 
-    if (uploadedFile !== undefined) {
-      res.status(200).json({ message: "Bid saved" });
-      return;
-    }
-    res.status(500).json({ message: "Saving bid failed" });
+    if (uploadedFile === undefined) throw new ErrorWithCode("Saving bid failed", 500);
+
+    res.status(200).json({ message: "Bid saved" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Saving bid failed" });
+    handleError("Saving bid failed", error, res);
   }
 };
 
