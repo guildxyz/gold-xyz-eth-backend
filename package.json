@@ -50,6 +50,7 @@
     "@0x/order-utils": "^10.4.28",
     "@ethersproject/bignumber": "^5.5.0",
     "@ethersproject/contracts": "^5.5.0",
+    "@ethersproject/logger": "^5.5.0",
     "@ethersproject/providers": "^5.5.2",
     "@ethersproject/wallet": "^5.5.0",
     "@fleekhq/fleek-storage-js": "^1.0.20",

@@ -1,3 +1,4 @@
+import { Logger } from "@ethersproject/logger";
 import axios from "axios";
 import type { Response } from "express";
 
@@ -22,4 +23,18 @@ const handleError = (message: string, error: any, res: Response): void => {
   });
 };
 
-export { ErrorWithCode, handleError };
+const decodeContractError = (error: any): string => {
+  if (error.code !== Logger.errors.CALL_EXCEPTION) return error.message;
+  let reason;
+  switch (error.errorName) {
+    case "MaxNFTNumberReached":
+      reason = "Reached the maximum number of NFTs";
+      break;
+    default:
+      reason = `${error.errorName}: ${error.errorArgs}`;
+      break;
+  }
+  return `The transaction would fail: ${reason}.`;
+};
+
+export { ErrorWithCode, decodeContractError, handleError };

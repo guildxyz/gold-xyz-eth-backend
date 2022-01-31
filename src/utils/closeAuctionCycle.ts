@@ -1,5 +1,6 @@
 import { orderHashUtils } from "@0x/order-utils";
 import { goldContract } from "../config/contract.js";
+import { decodeContractError } from "./errors.js";
 import getMaxBid from "./getMaxBid.js";
 import { isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee } from "./ZeroExExchangeUtils.js";
 
@@ -21,8 +22,7 @@ const closeAuctionCycle = async (auctionId: string) => {
       });
     } catch (error) {
       console.error(error);
-      // TODO: try to decode revert reason or error name/params
-      throw new Error("Auction cycle cannot be closed in the contract");
+      throw new Error(decodeContractError(error));
     }
     await goldContract.closeAuctionCycle(maxBid.order, maxBid.signature, auctionId, {
       value: fee,
