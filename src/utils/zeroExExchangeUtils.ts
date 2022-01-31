@@ -18,10 +18,15 @@ const isValidOrderSignature = async (order: Order, signature: string) =>
   exchangeContract.isValidOrderSignature(order, signature);
 
 const isOrderFillable = async (order: Order, signature: string) => {
-  const hashSignature = await isValidHashSignature(orderHashUtils.getOrderHash(order), order.makerAddress, signature);
-  const orderSignature = await isValidOrderSignature(order, signature);
-  const info = await orderInfo(order);
-  return hashSignature && orderSignature && info[0] === 3;
+  try {
+    const hashSignature = await isValidHashSignature(orderHashUtils.getOrderHash(order), order.makerAddress, signature);
+    const orderSignature = await isValidOrderSignature(order, signature);
+    const info = await orderInfo(order);
+    return hashSignature && orderSignature && info[0] === 3;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
 
 export { isOrderFillable, isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee };

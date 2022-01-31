@@ -2,6 +2,7 @@ import { createFileKey, deleteFile, listBuckets, uploadFile } from "../../ipfs.j
 import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import getAuctions from "../../utils/getAuctions.js";
+import { isOrderFillable } from "../../utils/zeroExExchangeUtils.js";
 
 const saveOrder: ControllerFunction = async (req, res) => {
   try {
@@ -11,6 +12,8 @@ const saveOrder: ControllerFunction = async (req, res) => {
 
     const auctions = await getAuctions();
     if (!auctions.includes(auctionId)) throw new ErrorWithCode(`Auction ${auctionId} does not exist`, 404);
+
+    if (!(await isOrderFillable(order, signature))) throw new ErrorWithCode("The bid is incorrect", 500);
 
     const fileKey = createFileKey(auctionId, order.makerAddress);
     const buckets = await listBuckets();
