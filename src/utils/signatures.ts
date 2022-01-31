@@ -1,9 +1,9 @@
-import { utils } from "ethers";
+import { verifyMessage } from "@ethersproject/wallet";
 import { ErrorWithCode } from "./errors.js";
 
 const getMessageSigner = (message: string, signature: string) => {
   try {
-    return utils.verifyMessage(message, signature);
+    return verifyMessage(message, signature);
   } catch (error) {
     throw new ErrorWithCode("Incorrect signature provided", 400);
   }

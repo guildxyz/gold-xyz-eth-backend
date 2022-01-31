@@ -58,7 +58,6 @@
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",
     "ethereumjs-util": "^7.1.3",
-    "ethers": "^5.5.3",
     "express": "^4.17.2"
   },
   "lint-staged": {
