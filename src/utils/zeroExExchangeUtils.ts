@@ -1,7 +1,9 @@
+import { orderHashUtils } from "@0x/order-utils";
+import { Order } from "@0x/types";
 import { exchangeContract } from "../config/contract.js";
 import provider from "../config/provider.js";
 
-const orderInfo = async (order: object) => exchangeContract.getOrderInfo(order);
+const orderInfo = async (order: Order) => exchangeContract.getOrderInfo(order);
 
 const protocolFee = async () => {
   const feeData = await provider.getFeeData();
@@ -12,7 +14,14 @@ const protocolFee = async () => {
 const isValidHashSignature = async (hash: string, address: string, signature: string) =>
   exchangeContract.isValidHashSignature(hash, address, signature);
 
-const isValidOrderSignature = async (order: object, signature: string) =>
+const isValidOrderSignature = async (order: Order, signature: string) =>
   exchangeContract.isValidOrderSignature(order, signature);
 
-export { isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee };
+const isOrderFillable = async (order: Order, signature: string) => {
+  const hashSignature = await isValidHashSignature(orderHashUtils.getOrderHash(order), order.makerAddress, signature);
+  const orderSignature = await isValidOrderSignature(order, signature);
+  const info = await orderInfo(order);
+  return hashSignature && orderSignature && info[0] === 3;
+};
+
+export { isOrderFillable, isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee };

@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@0x/order-utils": "^10.4.28",
+    "@0x/types": "^3.3.4",
     "@ethersproject/bignumber": "^5.5.0",
     "@ethersproject/contracts": "^5.5.0",
     "@ethersproject/logger": "^5.5.0",
