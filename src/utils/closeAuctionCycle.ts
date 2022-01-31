@@ -2,7 +2,7 @@ import { orderHashUtils } from "@0x/order-utils";
 import { goldContract } from "../config/contract.js";
 import { decodeContractError } from "./errors.js";
 import getMaxBid from "./getMaxBid.js";
-import { isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee } from "./ZeroExExchangeUtils.js";
+import { isValidHashSignature, isValidOrderSignature, orderInfo, protocolFee } from "./zeroExExchangeUtils.js";
 
 const closeAuctionCycle = async (auctionId: string) => {
   const maxBid = await getMaxBid(auctionId);
