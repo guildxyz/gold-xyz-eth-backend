@@ -1,5 +1,6 @@
 import { createFileKey, deleteFile, listBuckets, uploadFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
+import { createFileKey, uploadFile, deleteFile } from "../../ipfs.js";
 
 const saveOrder: ControllerFunction = async (req, res) => {
   try {
@@ -8,10 +9,9 @@ const saveOrder: ControllerFunction = async (req, res) => {
     const data = { order, signature, timestamp };
 
     const fileKey = createFileKey(auctionId, order.makerAddress);
-    const buckets = await listBuckets();
 
     // Delete the file to avoid collision
-    await deleteFile(fileKey, buckets[0].name);
+    await deleteFile(fileKey);
 
     const uploadedFile = await uploadFile(fileKey, JSON.stringify(data));
 

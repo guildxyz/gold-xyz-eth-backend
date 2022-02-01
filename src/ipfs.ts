@@ -20,12 +20,6 @@ const listFiles = async (auctionId: string, options: string[]) =>
     getOptions: options,
   });
 
-const listBuckets = async () =>
-  fleekStorage.listBuckets({
-    apiKey: process.env.FLEEK_API_KEY,
-    apiSecret: process.env.FLEEK_API_SECRET,
-  });
-
 const uploadFile = async (fileKey: string, data: string) =>
   fleekStorage.upload({
     apiKey: process.env.FLEEK_API_KEY,
@@ -34,12 +28,11 @@ const uploadFile = async (fileKey: string, data: string) =>
     data,
   });
 
-const deleteFile = async (fileKey: string, bucketName: string) =>
+const deleteFile = async (fileKey: string) =>
   fleekStorage.deleteFile({
     apiKey: process.env.FLEEK_API_KEY,
     apiSecret: process.env.FLEEK_API_SECRET,
     key: fileKey,
-    bucket: bucketName,
   });
 
-export { createFileKey, getFile, listFiles, listBuckets, uploadFile, deleteFile };
+export { createFileKey, getFile, listFiles, uploadFile, deleteFile };
