@@ -1,5 +1,5 @@
-import "./config/environment.js";
 import cors from "cors";
+import "dotenv/config";
 import express from "express";
 import api from "./api/index.js";
 
