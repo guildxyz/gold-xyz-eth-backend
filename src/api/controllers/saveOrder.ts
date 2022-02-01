@@ -1,6 +1,6 @@
 import { assetDataUtils, ERC20AssetData, ERC721AssetData } from "@0x/order-utils";
 import { goldContract } from "../../config/contract.js";
-import { createFileKey, deleteFile, listBuckets, uploadFile } from "../../ipfs.js";
+import { createFileKey, deleteFile, uploadFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import getAuctions from "../../utils/getAuctions.js";
@@ -36,10 +36,9 @@ const saveOrder: ControllerFunction = async (req, res) => {
       throw new ErrorWithCode("Bid for a different NFT id", 500);
 
     const fileKey = createFileKey(auctionId, order.makerAddress);
-    const buckets = await listBuckets();
 
     // Delete the file to avoid collision
-    await deleteFile(fileKey, buckets[0].name);
+    await deleteFile(fileKey);
 
     const uploadedFile = await uploadFile(fileKey, JSON.stringify(data));
 

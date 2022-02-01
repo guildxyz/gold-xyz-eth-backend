@@ -1,4 +1,4 @@
-import { createFileKey, deleteFile, listBuckets } from "../../ipfs.js";
+import { createFileKey, deleteFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import { verifySignature } from "../../utils/signatures.js";
@@ -8,8 +8,7 @@ const deleteOrder: ControllerFunction = async (req, res) => {
     const { auctionId, order, signature } = req.body;
     if (verifySignature(order, signature)) {
       const fileKey = createFileKey(auctionId, order.makerAddress);
-      const buckets = await listBuckets();
-      await deleteFile(fileKey, buckets[0].name);
+      await deleteFile(fileKey);
       res.status(200).json({ message: "Delete request sent" });
     } else throw new ErrorWithCode("Invalid signature", 403);
   } catch (error) {
