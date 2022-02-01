@@ -1,5 +1,5 @@
 import { Contract } from "@ethersproject/contracts";
-import { Wallet } from "ethers";
+import { Wallet } from "@ethersproject/wallet";
 import { readFile } from "fs/promises";
 import { join, resolve } from "path";
 import provider from "./provider.js";

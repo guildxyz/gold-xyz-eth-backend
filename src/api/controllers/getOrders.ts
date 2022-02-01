@@ -1,5 +1,6 @@
 import { listFiles } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
+import { ErrorWithCode, handleError } from "../../utils/errors.js";
 
 const getOrders: ControllerFunction = async (req, res) => {
   try {
@@ -7,14 +8,12 @@ const getOrders: ControllerFunction = async (req, res) => {
 
     const files = await listFiles(auctionId, ["bucket", "key", "hash", "publicUrl"]);
 
-    if (files.length === 0) {
-      res.status(404).json({ message: `Auction ${auctionId} does not exist or has no bids yet` });
-      return;
-    }
+    if (files.length === 0) throw new ErrorWithCode(`Auction ${auctionId} does not exist or has no bids yet`, 404);
+
     res.status(200).json({ orders: files });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Unexpected error" });
+    handleError("Getting bids failed", error, res);
   }
 };
 

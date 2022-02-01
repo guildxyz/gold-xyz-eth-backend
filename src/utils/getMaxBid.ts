@@ -26,8 +26,8 @@ const getMaxBid = async (auctionId: string) => {
     }
 
     return maxBid;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     return undefined;
   }
 };
