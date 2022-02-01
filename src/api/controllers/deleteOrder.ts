@@ -1,7 +1,6 @@
-import { createFileKey, deleteFile, listBuckets } from "../../ipfs.js";
+import { createFileKey, deleteFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
 import verifySignature from "../../utils/verifySignature.js";
-import { createFileKey, deleteFile } from "../../ipfs.js";
 
 const deleteOrder: ControllerFunction = async (req, res) => {
   try {
