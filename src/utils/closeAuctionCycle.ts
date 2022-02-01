@@ -1,14 +1,15 @@
 import { goldContract } from "../config/contract.js";
-import { decodeContractError } from "./errors.js";
+import { decodeContractError, ErrorWithCode } from "./errors.js";
 import getMaxBid from "./getMaxBid.js";
 import { isOrderFillable, protocolFee } from "./zeroExExchangeUtils.js";
 
 const closeAuctionCycle = async (auctionId: string) => {
   const maxBid = await getMaxBid(auctionId);
 
-  if (maxBid === undefined) throw new Error("Cannot get the winning bid");
+  if (maxBid === undefined) throw new ErrorWithCode(`Auction ${auctionId} does not exist or has no bids yet`, 404);
 
-  if (!(await isOrderFillable(maxBid.order, maxBid.signature))) throw new Error("The winning bid is incorrect");
+  if (!(await isOrderFillable(maxBid.order, maxBid.signature)))
+    throw new ErrorWithCode("The winning bid is incorrect", 500);
 
   const fee = await protocolFee();
   try {
@@ -18,7 +19,7 @@ const closeAuctionCycle = async (auctionId: string) => {
     });
   } catch (error) {
     console.error(error);
-    throw new Error(decodeContractError(error));
+    throw new ErrorWithCode(decodeContractError(error), 500);
   }
   await goldContract.closeAuctionCycle(maxBid.order, maxBid.signature, auctionId, {
     value: fee,
