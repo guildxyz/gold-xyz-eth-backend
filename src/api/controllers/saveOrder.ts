@@ -35,7 +35,7 @@ const saveOrder: ControllerFunction = async (req, res) => {
     if (!auctionStatus.currentAuctionCycle.eq(Number(nftAssetData.tokenId.toString())))
       throw new ErrorWithCode("Bid for a different NFT id", 500);
 
-    const fileKey = createFileKey(auctionId, order.makerAddress);
+    const fileKey = createFileKey(auctionId, auctionStatus.currentAuctionCycle.toString(), order.makerAddress);
 
     // Delete the file to avoid collision
     await deleteFile(fileKey);
