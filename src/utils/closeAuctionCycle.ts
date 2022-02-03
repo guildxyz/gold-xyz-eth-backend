@@ -4,9 +4,13 @@ import getMaxBid from "./getMaxBid.js";
 import { isOrderFillable, protocolFee } from "./zeroExExchangeUtils.js";
 
 const closeAuctionCycle = async (auctionId: string) => {
-  const maxBid = await getMaxBid(auctionId);
+  const auctionStatus = await goldContract.getAuctionStatus(auctionId);
+  const cycle = auctionStatus.currentAuctionCycle.toString();
 
-  if (maxBid === undefined) throw new ErrorWithCode(`Auction ${auctionId} does not exist or has no bids yet`, 404);
+  const maxBid = await getMaxBid(auctionId, cycle);
+
+  if (maxBid === undefined)
+    throw new ErrorWithCode(`Auction ${auctionId} does not exist or has no bids in cycle #${cycle}`, 404);
 
   if (!(await isOrderFillable(maxBid.order, maxBid.signature)))
     throw new ErrorWithCode("The winning bid is incorrect", 500);

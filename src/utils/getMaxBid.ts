@@ -1,10 +1,10 @@
-import { getFile, listFiles } from "../ipfs.js";
+import { createPath, getFile, listFiles } from "../ipfs.js";
 
-const getMaxBid = async (auctionId: string) => {
+const getMaxBid = async (auctionId: string, cycle: string) => {
   try {
     let maxBid;
 
-    const files = await listFiles(auctionId, ["key"]);
+    const files = await listFiles(createPath(auctionId, cycle), ["key"]);
 
     if (files.length === 0) return undefined;
 

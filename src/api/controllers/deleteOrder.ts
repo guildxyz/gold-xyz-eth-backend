@@ -6,9 +6,9 @@ import { verifySignature } from "../../utils/signatures.js";
 const deleteOrder: ControllerFunction = async (req, res) => {
   try {
     // signature: the order's salt is signed
-    const { auctionId, address, signature } = req.body;
+    const { auctionId, cycle, address, signature } = req.body;
 
-    const fileKey = createFileKey(auctionId, address);
+    const fileKey = createFileKey(auctionId, cycle, address);
     const file = await getFile(fileKey);
     if (file === undefined) throw new ErrorWithCode(`Address ${address} has no bids in auction ${auctionId}`, 404);
 

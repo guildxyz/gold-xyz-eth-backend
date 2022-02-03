@@ -1,6 +1,9 @@
 import fleekStorage from "@fleekhq/fleek-storage-js";
 
-const createFileKey = (auctionId: string, address: string) => auctionId.concat("/", address, ".json");
+const createPath = (auctionId: string, cycle: string) => auctionId.concat("/", cycle);
+
+const createFileKey = (auctionId: string, cycle: string, address: string) =>
+  createPath(auctionId, cycle).concat("/", address, ".json");
 
 const getFile = async (fileKey: string) =>
   fleekStorage
@@ -12,11 +15,11 @@ const getFile = async (fileKey: string) =>
     })
     .catch(() => undefined);
 
-const listFiles = async (auctionId: string, options: string[]) =>
+const listFiles = async (path: string, options: string[]) =>
   fleekStorage.listFiles({
     apiKey: process.env.FLEEK_API_KEY,
     apiSecret: process.env.FLEEK_API_SECRET,
-    prefix: auctionId,
+    prefix: path,
     getOptions: options,
   });
 
@@ -35,4 +38,4 @@ const deleteFile = async (fileKey: string) =>
     key: fileKey,
   });
 
-export { createFileKey, getFile, listFiles, uploadFile, deleteFile };
+export { createFileKey, createPath, getFile, listFiles, uploadFile, deleteFile };
