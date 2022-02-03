@@ -9,7 +9,7 @@ const getMessageSigner = (message: string, signature: string) => {
   }
 };
 
-const verifySignature = (message: object, signature: string) =>
-  getMessageSigner(JSON.stringify(message), signature) === process.env.ADMIN_ADDRESS;
+const verifySignature = (message: object, signature: string, supposedSigner: string) =>
+  getMessageSigner(JSON.stringify(message), signature) === supposedSigner;
 
 export { getMessageSigner, verifySignature };
