@@ -5,7 +5,7 @@ import { decodeContractError, ErrorWithCode } from "./errors.js";
 import getMaxBid from "./getMaxBid.js";
 import { protocolFee } from "./zeroExExchangeUtils.js";
 
-/* eslint-disable no-await-in-loop, no-continue */
+/* eslint-disable no-await-in-loop */
 const closeAuctionCycle = async (auctionId: string) => {
   let maxBid;
 
@@ -31,14 +31,12 @@ const closeAuctionCycle = async (auctionId: string) => {
         gasLimit: 2000000,
         value: fee,
       });
+      break;
     } catch (error: any) {
       if (error.code !== Logger.errors.CALL_EXCEPTION) throw new ErrorWithCode(error.message, 500);
       await deleteFile(createFileKey(auctionId, cycle, maxBid.order.makerAddress));
       console.error(`Bid deleted: ${maxBid.order.makerAddress}, reason: ${decodeContractError(error)}`);
-      continue;
     }
-
-    break;
   }
 
   await goldContract.closeAuctionCycle(maxBid.order, maxBid.signature, auctionId, {
