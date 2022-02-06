@@ -3,7 +3,7 @@ import { goldContract } from "../config/contract.js";
 import { createFileKey, deleteFile } from "../ipfs.js";
 import { decodeContractError, ErrorWithCode } from "./errors.js";
 import getMaxBid from "./getMaxBid.js";
-import { orderInfo, protocolFee } from "./zeroExExchangeUtils.js";
+import { protocolFee } from "./zeroExExchangeUtils.js";
 
 /* eslint-disable no-await-in-loop, no-continue */
 const closeAuctionCycle = async (auctionId: string) => {
@@ -25,11 +25,6 @@ const closeAuctionCycle = async (auctionId: string) => {
 
     if (maxBid === undefined)
       throw new ErrorWithCode(`Auction ${auctionId} does not exist or has no bids in cycle #${cycle}`, 404);
-
-    if ((await orderInfo(maxBid.order))[0] !== 3) {
-      await deleteFile(createFileKey(auctionId, cycle, maxBid.order.makerAddress));
-      continue;
-    }
 
     try {
       await goldContract.callStatic.closeAuctionCycle(maxBid.order, maxBid.signature, auctionId, {
