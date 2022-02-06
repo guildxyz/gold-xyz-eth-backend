@@ -1,7 +1,7 @@
 import { Logger } from "@ethersproject/logger";
 import { goldContract } from "../config/contract.js";
 import { createFileKey, deleteFile } from "../ipfs.js";
-import { ErrorWithCode } from "./errors.js";
+import { decodeContractError, ErrorWithCode } from "./errors.js";
 import getMaxBid from "./getMaxBid.js";
 import { orderInfo, protocolFee } from "./zeroExExchangeUtils.js";
 
@@ -39,7 +39,7 @@ const closeAuctionCycle = async (auctionId: string) => {
     } catch (error: any) {
       if (error.code !== Logger.errors.CALL_EXCEPTION) throw new ErrorWithCode(error.message, 500);
       await deleteFile(createFileKey(auctionId, cycle, maxBid.order.makerAddress));
-      console.error(`Bid deleted: ${maxBid.order.makerAddress}`);
+      console.error(`Bid deleted: ${maxBid.order.makerAddress}, reason: ${decodeContractError(error)}`);
       continue;
     }
 
