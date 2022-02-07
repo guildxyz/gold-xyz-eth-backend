@@ -30,6 +30,9 @@ const decodeContractError = (error: any): string => {
     case "MaxNFTNumberReached":
       reason = "Reached the maximum number of NFTs";
       break;
+    case null:
+      reason = "Error thrown by 0x";
+      break;
     default:
       reason = `${error.errorName}: ${error.errorArgs}`;
       break;
