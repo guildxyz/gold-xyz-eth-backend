@@ -1,5 +1,6 @@
 {
   "auctionId": "someAuction",
+  "cycle": "0",
   "address": "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B",
   "signature": "0x1da3c30efe006dbd2d5d798deba3e95e79e833c3aa6ee9b86073ac40af2a0c7d6e59be8328096f18f2829f147244c5e0aa5baeca14c0a186a0337df8fd609d741b"
 }
