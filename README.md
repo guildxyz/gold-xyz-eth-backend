@@ -1,6 +1,6 @@
 # Gold.xyz (Ethereum) Backend
 
-The app in this repository is a backend for [gold.xyz](https://gold.xyz)'s Ethereum version found [here](https://github.com/agoraxyz/gold-xyz-eth). It's sole purpose is to store bids and close auction cycles periodically.
+The app in this repository is a backend for [gold.xyz](https://gold.xyz)'s Ethereum version found [here](https://github.com/agoraxyz/gold-xyz-eth). It's sole purpose is to store bids on [IPFS](https://ipfs.io) and close auction cycles in the contract periodically.
 
 ## Requirements
 
@@ -30,4 +30,3 @@ npm run dev
 ```
 
 This will start the app on localhost on the port configured in the _.env_ file.
-
