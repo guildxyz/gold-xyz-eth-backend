@@ -3,7 +3,7 @@ import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import { verifySignature } from "../../utils/signatures.js";
 
-const deleteOrder: ControllerFunction = async (req, res) => {
+const deleteBid: ControllerFunction = async (req, res) => {
   try {
     // signature: the order's salt is signed
     const { auctionId, cycle, address, signature } = req.body;
@@ -24,4 +24,4 @@ const deleteOrder: ControllerFunction = async (req, res) => {
   }
 };
 
-export default deleteOrder;
+export default deleteBid;

@@ -1,9 +1,9 @@
 import closeCycle from "./closeCycle.js";
-import deleteOrder from "./deleteOrder.js";
-import getOrder from "./getOrder.js";
-import getOrders from "./getOrders.js";
-import getWinningOrder from "./getWinningOrder.js";
+import deleteBid from "./deleteBid.js";
+import getBid from "./getBid.js";
+import getBids from "./getBids.js";
+import getWinningBid from "./getWinningBid.js";
 import hello from "./hello.js";
-import saveOrder from "./saveOrder.js";
+import saveBid from "./saveBid.js";
 
-export { hello, closeCycle, saveOrder, deleteOrder, getOrders, getWinningOrder, getOrder };
+export { hello, closeCycle, saveBid, deleteBid, getBids, getWinningBid, getBid };

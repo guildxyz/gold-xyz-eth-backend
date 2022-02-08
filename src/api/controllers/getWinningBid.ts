@@ -2,7 +2,7 @@ import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import getMaxBid from "../../utils/getMaxBid.js";
 
-const getWinningOrder: ControllerFunction = async (req, res) => {
+const getWinningBid: ControllerFunction = async (req, res) => {
   try {
     const { auctionId, cycle } = req.params;
     const winningBid = await getMaxBid(auctionId, cycle);
@@ -15,4 +15,4 @@ const getWinningOrder: ControllerFunction = async (req, res) => {
   }
 };
 
-export default getWinningOrder;
+export default getWinningBid;

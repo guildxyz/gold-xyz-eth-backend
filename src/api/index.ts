@@ -5,14 +5,14 @@ export default () => {
   const api = Router();
 
   api.get("/api/hello", controller.hello);
-  api.get("/api/orders/:auctionId/:cycle", controller.getOrders);
-  api.get("/api/orders/:auctionId/:cycle/winning", controller.getWinningOrder);
-  api.get("/api/orders/:auctionId/:cycle/:address", controller.getOrder);
+  api.get("/api/bids/:auctionId/:cycle", controller.getBids);
+  api.get("/api/bids/:auctionId/:cycle/winning", controller.getWinningBid);
+  api.get("/api/bids/:auctionId/:cycle/:address", controller.getBid);
 
   api.post("/api/close-cycle", controller.closeCycle);
-  api.post("/api/save-order", controller.saveOrder);
+  api.post("/api/save-bid", controller.saveBid);
 
-  api.delete("/api/delete-order", controller.deleteOrder);
+  api.delete("/api/delete-bid", controller.deleteBid);
 
   return api;
 };
