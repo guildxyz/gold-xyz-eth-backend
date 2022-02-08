@@ -6,7 +6,7 @@ import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import getAuctions from "../../utils/getAuctions.js";
 import { isOrderFillable } from "../../utils/zeroExExchangeUtils.js";
 
-const saveOrder: ControllerFunction = async (req, res) => {
+const saveBid: ControllerFunction = async (req, res) => {
   try {
     const { auctionId, order, signature } = req.body;
     const timestamp = Number(new Date());
@@ -57,4 +57,4 @@ const saveOrder: ControllerFunction = async (req, res) => {
   }
 };
 
-export default saveOrder;
+export default saveBid;

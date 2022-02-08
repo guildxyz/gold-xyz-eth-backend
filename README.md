@@ -35,9 +35,9 @@ This will start the app on localhost on the port configured in the _.env_ file.
 
 ### GET
 
-- `api/orders/:auctionId/:cycle` - returns a list of bids in a certain cycle of an auction
-- `api/orders/:auctionId/:cycle/:address` - returns the bid of a certain address in a certain cycle of an auction
-- `api/orders/:auctionId/:cycle/winning` - returns the winning bid in a certain cycle of an auction
+- `api/bids/:auctionId/:cycle` - returns a list of bids in a certain cycle of an auction
+- `api/bids/:auctionId/:cycle/:address` - returns the bid of a certain address in a certain cycle of an auction
+- `api/bids/:auctionId/:cycle/winning` - returns the winning bid in a certain cycle of an auction
 - `api/hello?name=` - a test endpoint with an optional parameter
 
 ### POST
@@ -49,13 +49,13 @@ This will start the app on localhost on the port configured in the _.env_ file.
     { "auctionId": "someAuction" }
     ```
 
-- `api/save-order` - validates and saves bids on IPFS.
+- `api/save-bid` - validates and saves bids on IPFS.
 
   - body: contains the auction's id, the bid in the form of a 0x order and it's signature (signed via 0x utils). See `/example/save-input-example.json`.
 
 ### DELETE
 
-- `api/delete-order` - deletes a bid from IPFS. Note that due to the nature of IPFS we can't 100% ensure that the bid will be gone forever.
+- `api/delete-bid` - deletes a bid from IPFS. Note that due to the nature of IPFS we can't 100% ensure that the bid will be gone forever.
 
   - body: contains the auction's id, cycle, the bidder's address and a signature: the bid's salt signed via _eth_sign_. See `/example/delete-input-example.json`. Signing example using [ethers.js](https://github.com/ethers-io/ethers.js):
 

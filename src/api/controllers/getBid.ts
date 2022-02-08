@@ -2,7 +2,7 @@ import { createFileKey, getFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 
-const getOrder: ControllerFunction = async (req, res) => {
+const getBid: ControllerFunction = async (req, res) => {
   try {
     const { auctionId, cycle, address } = req.params;
 
@@ -18,4 +18,4 @@ const getOrder: ControllerFunction = async (req, res) => {
   }
 };
 
-export default getOrder;
+export default getBid;
