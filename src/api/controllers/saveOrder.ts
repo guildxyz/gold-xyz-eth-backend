@@ -1,6 +1,6 @@
 import { assetDataUtils, ERC20AssetData, ERC721AssetData } from "@0x/order-utils";
 import { goldContract } from "../../config/contract.js";
-import { createFileKey, deleteFile, uploadFile } from "../../ipfs.js";
+import { createFileKey, createPath, deleteFile, listFiles, uploadFile } from "../../ipfs.js";
 import ControllerFunction from "../../types/ControllerFunction.js";
 import { ErrorWithCode, handleError } from "../../utils/errors.js";
 import getAuctions from "../../utils/getAuctions.js";
@@ -19,10 +19,16 @@ const saveOrder: ControllerFunction = async (req, res) => {
 
     const auctionConfig = await goldContract.getAuctionConfig(auctionId);
     const auctionStatus = await goldContract.getAuctionStatus(auctionId);
+
+    const listOfBids = await listFiles(createPath(auctionId, auctionStatus.currentAuctionCycle.toString()), ["key"]);
+
+    if (listOfBids.length > 0) {
+      if (auctionStatus.currentAuctionCycleStartTime.add(auctionConfig.cyclePeriod).lt(Math.ceil(Date.now() / 1000)))
+        throw new ErrorWithCode("Auction cycle ended", 500);
+      if (!auctionStatus.isActive) throw new ErrorWithCode("Auction is not active", 500);
+    }
+
     if (auctionConfig.minimumBidAmount.gt(order.makerAssetAmount)) throw new ErrorWithCode("Bid too low", 500);
-    if (auctionStatus.currentAuctionCycleStartTime.add(auctionConfig.cyclePeriod).lt(Math.ceil(Date.now() / 1000)))
-      throw new ErrorWithCode("Auction cycle ended", 500);
-    if (!auctionStatus.isActive) throw new ErrorWithCode("Auction is not active", 500);
     if (auctionStatus.isFrozen) throw new ErrorWithCode("Auction is frozen", 500);
 
     const bidderTokenAssetData = assetDataUtils.decodeAssetDataOrThrow(order.makerAssetData) as ERC20AssetData;
