@@ -36,7 +36,7 @@ This will start the app on localhost on the port configured in the _.env_ file.
 ### GET
 
 - `/api/bidders/:auctionId/:cycle` - returns a list of bidders in a certain cycle of an auction
-- `api/bids/:auctionId/:cycle` - returns a list of bids in a certain cycle of an auction
+- `api/bids/:auctionId/:cycle` - returns all bids in a certain cycle of an auction
 - `api/bids/:auctionId/:cycle/:address` - returns the bid of a certain address in a certain cycle of an auction
 - `api/bids/:auctionId/:cycle/winning` - returns the winning bid in a certain cycle of an auction
 - `api/hello?name=` - a test endpoint with an optional parameter
