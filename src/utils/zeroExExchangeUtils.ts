@@ -1,5 +1,4 @@
-import { orderHashUtils } from "@0x/order-utils";
-import { Order } from "@0x/types";
+import { Order, orderHashUtils } from "@0x/order-utils";
 import { exchangeContract } from "../config/contract.js";
 import provider from "../config/provider.js";
 
