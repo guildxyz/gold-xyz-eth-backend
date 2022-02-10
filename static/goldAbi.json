@@ -25,6 +25,11 @@
         "internalType": "address",
         "name": "_zeroExExchange",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_server",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -34,6 +39,25 @@
     "inputs": [],
     "name": "FailedToSendEther",
     "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "auctionId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "newState",
+        "type": "bool"
+      }
+    ],
+    "name": "AuctionFiltered",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -65,6 +89,25 @@
       }
     ],
     "name": "AuctionInitialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "auctionId",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "newState",
+        "type": "bool"
+      }
+    ],
+    "name": "AuctionVerified",
     "type": "event"
   },
   {
@@ -231,7 +274,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -239,6 +283,20 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "server",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -255,7 +313,8 @@
   },
   {
     "stateMutability": "payable",
-    "type": "receive"
+    "type": "receive",
+    "payable": true
   },
   {
     "inputs": [
@@ -329,9 +388,9 @@
         "type": "uint24"
       },
       {
-        "internalType": "uint112",
+        "internalType": "uint96",
         "name": "_auctionStart",
-        "type": "uint112"
+        "type": "uint96"
       }
     ],
     "name": "initializeAuction",
@@ -432,7 +491,8 @@
     "name": "closeAuctionCycle",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
+    "type": "function",
+    "payable": true
   },
   {
     "inputs": [
@@ -466,6 +526,32 @@
       }
     ],
     "name": "changeAuctionFreezeState",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_auctionId",
+        "type": "string"
+      }
+    ],
+    "name": "changeAuctionFilteredState",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_auctionId",
+        "type": "string"
+      }
+    ],
+    "name": "changeAuctionVerifiedState",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -517,7 +603,8 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -530,9 +617,9 @@
     "name": "getAuctionStatus",
     "outputs": [
       {
-        "internalType": "uint112",
+        "internalType": "uint96",
         "name": "currentAuctionCycleStartTime",
-        "type": "uint112"
+        "type": "uint96"
       },
       {
         "internalType": "uint128",
@@ -541,12 +628,22 @@
       },
       {
         "internalType": "bool",
+        "name": "isFinished",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
         "name": "isFrozen",
         "type": "bool"
       },
       {
         "internalType": "bool",
-        "name": "isActive",
+        "name": "isFiltered",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "isVerified",
         "type": "bool"
       },
       {
@@ -556,6 +653,7 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   }
 ]

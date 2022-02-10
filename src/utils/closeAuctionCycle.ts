@@ -15,7 +15,7 @@ const closeAuctionCycle = async (auctionId: string) => {
 
   if (auctionStatus.currentAuctionCycleStartTime.add(auctionConfig.cyclePeriod).gt(Math.ceil(Date.now() / 1000)))
     throw new ErrorWithCode("Auction cycle did not end yet", 500);
-  if (!auctionStatus.isActive) throw new ErrorWithCode("Auction is not active", 500);
+  if (auctionStatus.isFinished) throw new ErrorWithCode("Auction is finished", 500);
   if (auctionStatus.isFrozen) throw new ErrorWithCode("Auction is frozen", 500);
 
   const fee = await protocolFee();

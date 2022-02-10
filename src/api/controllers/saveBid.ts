@@ -25,7 +25,7 @@ const saveBid: ControllerFunction = async (req, res) => {
     if (listOfBids.length > 0) {
       if (auctionStatus.currentAuctionCycleStartTime.add(auctionConfig.cyclePeriod).lt(Math.ceil(Date.now() / 1000)))
         throw new ErrorWithCode("Auction cycle ended", 500);
-      if (!auctionStatus.isActive) throw new ErrorWithCode("Auction is not active", 500);
+      if (auctionStatus.isFinished) throw new ErrorWithCode("Auction is finished", 500);
     }
 
     if (auctionConfig.minimumBidAmount.gt(order.makerAssetAmount)) throw new ErrorWithCode("Bid too low", 500);
